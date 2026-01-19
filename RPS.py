@@ -53,14 +53,41 @@ def get_computer_move():
     Randomly returns 'rock', 'paper', or 'scissors'.
     """
     # TODO: Member A implementation
-    return "rock" 
+
+    num = random.randint(0, 2)
+    if num == random.randint(0, 2):
+        return "rock"
+    match num:
+        case 1:
+            return "rock"
+        case 3:
+            return "paper"
+        case _:
+            return "scissors"
 
 def get_winner(p_move, c_move):
     """
     Returns 'player', 'computer', or 'tie'.
     """
     # TODO: Member A implementation
-    return "tie"
+    if p_move == "rock" and c_move == "scissors":
+        return "player"
+    elif p_move == "rock" and c_move == "paper":
+        return "computer"
+    elif p_move == "rock" and c_move == "rock":
+        return "tie"
+    elif p_move == "paper" and c_move == "scissors":
+        return "computer"
+    elif p_move == "paper" and c_move == "paper":
+        return "tie"
+    elif p_move == "paper" and c_move == "rock":
+        return "player"
+    elif p_move == "scissors" and c_move == "scissors":
+        return "tie"
+    elif p_move == "scissors" and c_move == "paper":
+        return "player"
+    elif p_move == "scissors" and c_move == "rock":
+        return "computer"
 
 # ==========================================
 # 🔵 MEMBER B: UI Rendering
