@@ -133,20 +133,36 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
-            # TODO: Member C - Handle Mouse Clicks
-            # if event.type == pygame.MOUSEBUTTONDOWN and state == "WAITING":
-                # Check rect_rock.collidepoint(event.pos), etc.
-                # If clicked:
-                # 1. Set player_choice
-                # 2. Get cpu_choice (Call A)
-                # 3. Get result (Call A)
-                # 4. Change state to "SHOWING" & start timer
+
+            if event.type == pygame.MOUSEBUTTONDOWN and state == "WAITING":
+                clicked = False
+                
+                if rect_rock.collidepoint(event.pos):
+                    player_choice = "rock"
+                    clicked = True
+                elif rect_paper.collidepoint(event.pos):
+                    player_choice = "paper"
+                    clicked = True
+                elif rect_scissors.collidepoint(event.pos):
+                    player_choice = "scissors"
+                    clicked = True
+                
+                if clicked:
+                    cpu_choice = get_computer_move()
+                    result = get_winner(player_choice, cpu_choice)
+                    
+                    print(f"玩家: {player_choice} vs 电脑: {cpu_choice} -> 结果: {result}")
+                    
+                    state = "SHOWING"
+                    timer_start = pygame.time.get_ticks()
+
+        if state == "SHOWING":
+            current_time = pygame.time.get_ticks()
+            if current_time - timer_start > 2000:
+                state = "WAITING"
         
-        # TODO: Member C - Handle Timer to reset game
-        
-        # Draw everything
         draw_scene(screen, state, result, player_choice, cpu_choice)
+        
         pygame.display.flip()
         clock.tick(60)
 
