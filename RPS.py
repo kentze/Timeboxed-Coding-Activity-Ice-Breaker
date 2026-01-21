@@ -197,7 +197,7 @@ def main():
                     cpu_choice = get_computer_move()
                     result = get_winner(player_choice, cpu_choice)
                     
-                    print(f"玩家: {player_choice} vs 电脑: {cpu_choice} -> 结果: {result}")
+                    print(f"Player: {player_choice} vs CPU: {cpu_choice} -> Result: {result}")
                     
                     state = "SHOWING"
                     timer_start = pygame.time.get_ticks()
