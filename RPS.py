@@ -28,7 +28,7 @@ font_small = pygame.font.SysFont("Arial", 30)
 def load_image(name):
     try:
         img = pygame.image.load(name)
-        return pygame.transform.scale(img, (150, 150)) # Resize to 150x150
+        return pygame.transform.scale(img, (150, 150))  # Resize to 150x150
     except:
         print(f"Error: Cannot find {name}. Please download the image.")
         sys.exit()
@@ -52,18 +52,15 @@ def get_computer_move():
     """
     Randomly returns 'rock', 'paper', or 'scissors'.
     """
-    # TODO: Member A implementation
 
-    num = random.randint(0, 2)
-    if num == random.randint(0, 2):
+    num = random.randint(0, 2) # {0: rock, 1: paper, 2: scissors}
+
+    if num == 0:
         return "rock"
-    match num:
-        case 1:
-            return "rock"
-        case 3:
-            return "paper"
-        case _:
-            return "scissors"
+    elif num == 1:
+        return "paper"
+    else:
+        return "scissors"
 
 def get_winner(p_move, c_move):
     """
@@ -92,6 +89,7 @@ def get_winner(p_move, c_move):
 # ==========================================
 # 🔵 MEMBER B: UI Rendering
 # ==========================================
+# This function takes care of rendering the game’s current state and data, and draws everything onto the screen surface.
 def draw_scene(surface, game_state, result_text, p_move, c_move):
     """
     Draws the background, images, and text based on game state.
@@ -154,11 +152,11 @@ def draw_scene(surface, game_state, result_text, p_move, c_move):
         result_render = font_big.render(msg, True, COLOR_TEXT)
         surface.blit(result_render, (SCREEN_WIDTH // 2 - result_render.get_width() // 2, 120))
 
-        # Small hint
+        # Informing user that we are returning to selection
         hint = font_small.render("Returning to selection...", True, COLOR_TEXT)
         surface.blit(hint, (SCREEN_WIDTH // 2 - hint.get_width() // 2, 190))
 
-    # ✅ Flaticon Attribution (visible credit in-game)
+    # I used Flaticon icons, so credit them here
     credit_font = pygame.font.SysFont("Arial", 16)
     credit = credit_font.render("Icons by Freepik - Flaticon.com", True, (180, 180, 180))
     surface.blit(credit, (10, SCREEN_HEIGHT - 25))
