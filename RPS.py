@@ -96,24 +96,72 @@ def draw_scene(surface, game_state, result_text, p_move, c_move):
     """
     Draws the background, images, and text based on game state.
     """
-    surface.fill(COLOR_BG) # Clear screen
+    surface.fill(COLOR_BG)  # Clear screen
 
     # Draw Title
     title = font_big.render("Rock Paper Scissors", True, COLOR_TEXT)
-    surface.blit(title, (SCREEN_WIDTH//2 - title.get_width()//2, 50))
+    surface.blit(title, (SCREEN_WIDTH // 2 - title.get_width() // 2, 50))
+
+    # Helper: map move -> image
+    move_to_img = {
+        "rock": img_rock,
+        "paper": img_paper,
+        "scissors": img_scissors
+    }
 
     if game_state == "WAITING":
-        # TODO: Member B implementation
-        # 1. Use surface.blit(img_rock, rect_rock) to draw the 3 images
-        # 2. Draw text "Choose your move"
-        pass # Remove pass when coding
+        # Draw the 3 choice images
+        surface.blit(img_rock, rect_rock)
+        surface.blit(img_paper, rect_paper)
+        surface.blit(img_scissors, rect_scissors)
+
+        # Prompt text
+        prompt = font_small.render("Choose your move", True, COLOR_TEXT)
+        surface.blit(prompt, (SCREEN_WIDTH // 2 - prompt.get_width() // 2, 320))
+
+        # Optional labels above icons
+        lbl_rock = font_small.render("Rock", True, COLOR_TEXT)
+        lbl_paper = font_small.render("Paper", True, COLOR_TEXT)
+        lbl_scissors = font_small.render("Scissors", True, COLOR_TEXT)
+
+        surface.blit(lbl_rock, (rect_rock.centerx - lbl_rock.get_width() // 2, rect_rock.y - 35))
+        surface.blit(lbl_paper, (rect_paper.centerx - lbl_paper.get_width() // 2, rect_paper.y - 35))
+        surface.blit(lbl_scissors, (rect_scissors.centerx - lbl_scissors.get_width() // 2, rect_scissors.y - 35))
 
     elif game_state == "SHOWING":
-        # TODO: Member B implementation
-        # 1. Draw Player's chosen image on the left
-        # 2. Draw Computer's chosen image on the right
-        # 3. Draw the result_text in the center
-        pass 
+        # Player image (left)
+        if p_move in move_to_img:
+            surface.blit(move_to_img[p_move], (150, 250))
+
+        # Computer image (right)
+        if c_move in move_to_img:
+            surface.blit(move_to_img[c_move], (500, 250))
+
+        # Labels
+        p_label = font_small.render("You", True, COLOR_TEXT)
+        c_label = font_small.render("Computer", True, COLOR_TEXT)
+        surface.blit(p_label, (150 + 75 - p_label.get_width() // 2, 210))
+        surface.blit(c_label, (500 + 75 - c_label.get_width() // 2, 210))
+
+        # Result text in center
+        if result_text == "player":
+            msg = "You Win!"
+        elif result_text == "computer":
+            msg = "You Lose!"
+        else:
+            msg = "Tie!"
+
+        result_render = font_big.render(msg, True, COLOR_TEXT)
+        surface.blit(result_render, (SCREEN_WIDTH // 2 - result_render.get_width() // 2, 120))
+
+        # Small hint
+        hint = font_small.render("Returning to selection...", True, COLOR_TEXT)
+        surface.blit(hint, (SCREEN_WIDTH // 2 - hint.get_width() // 2, 190))
+
+    # ✅ Flaticon Attribution (visible credit in-game)
+    credit_font = pygame.font.SysFont("Arial", 16)
+    credit = credit_font.render("Icons by Freepik - Flaticon.com", True, (180, 180, 180))
+    surface.blit(credit, (10, SCREEN_HEIGHT - 25))
 
 # ==========================================
 # 🟠 MEMBER C: Main Loop
